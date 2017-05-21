@@ -8,7 +8,7 @@ COPY assets/out.js out
 
 COPY assets/client.js client.js
 COPY assets/handlers.js handlers.js
-COPY assets/package.json package.json
+COPY package.json package.json
 
 RUN apt-get update & \
  npm install --quiet
