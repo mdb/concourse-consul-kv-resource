@@ -1,0 +1,9 @@
+{
+  "name": "consul-kv-resource",
+  "version": "0.0.1",
+  "description": "Get and update Consul K/V",
+  "author": "Mike Ball",
+  "dependencies": {
+    "consul-kv": "0.0.1"
+  }
+}
