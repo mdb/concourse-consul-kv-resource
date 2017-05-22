@@ -4,6 +4,7 @@
   "description": "Get and update Consul K/V",
   "author": "Mike Ball",
   "dependencies": {
-    "consul-kv": "0.0.1"
+    "consul-kv": "0.0.2",
+    "fs-extra": "2.1.2"
   }
 }
