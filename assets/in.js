@@ -25,6 +25,6 @@ process.stdin.on('data', stdin => {
         });
       });
     }, rejected => {
-      handlers.fail(new Error(`failed to get key ${source.key}`));
+      handlers.fail(rejected);
     });
 });
