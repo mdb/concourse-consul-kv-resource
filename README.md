@@ -1,3 +1,6 @@
+[![Docker Automated build](https://img.shields.io/docker/automated/clapclapexcitement/concourse-consul-kv-resource.svg?style=flat)](https://hub.docker.com/r/clapclapexcitement/concourse-consul-kv-resource/)
+
+
 # concourse-consul-kv-resource
 
 Warning: Experimental work-in-progress.
