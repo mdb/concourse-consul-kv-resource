@@ -57,7 +57,7 @@ jobs:
 
 - name: set-my-consul-key
   plan:
-  - put: resource-deploy-web-app
+  - put: my-consul-key
     params:
       value: 'foobar'
 ```
