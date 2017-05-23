@@ -24,7 +24,7 @@ process.stdin.on('data', stdin => {
               version: {
                 value: value,
                 // timestamp in milliseconds:
-                ref: Date.now()
+                ref: Date.now().toString()
               }
             });
           });
