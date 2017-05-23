@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 const Client = require('./client');
 const handlers = require('./handlers');
 
-function in(destDir) {
+function inAction(destDir) {
   return new Promise(resolve => {
     process.stdin.on('data', stdin => {
       const data = JSON.parse(stdin);
@@ -36,4 +36,4 @@ function in(destDir) {
   });
 }
 
-module.exports = in;
+module.exports = inAction;
