@@ -9,7 +9,7 @@ class Client {
       token: source.token,
       tlsCert: source.tls_cert,
       tlsKey: source.tls_key,
-      strictSSL: (source.strict_ssl === "false" || source.strict_ssl === false) ? false : true
+      strictSSL: source.skip_ssl_check ? false : true
     });
   }
 }
