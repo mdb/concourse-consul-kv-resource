@@ -3,11 +3,9 @@
 'use strict';
 
 const check = require('./lib/check');
+const handlers = require('./lib/handlers');
 
 check()
   .then((result) => {
-    console.log(JSON.stringify(result, null, 2));
-  })
-  .finally(() => {
-    process.exit(0);
+    handlers.success(result);
   });

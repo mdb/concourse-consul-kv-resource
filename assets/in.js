@@ -3,11 +3,9 @@
 'use strict';
 
 const in = require('./lib/in');
+const handlers = require('./lib/handlers');
 
 in(process.argv[2])
   .then(result => {
-    console.log(JSON.stringify(result, null, 2));
-  })
-  .finally(() => {
-    process.exit(0);
+    handlers.success(result);
   });

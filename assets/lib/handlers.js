@@ -7,5 +7,11 @@ module.exports = {
     }
 
     process.exit(1);
+  },
+
+  success: function(result) {
+    console.log(JSON.stringify(result, null, 2));
+
+    process.exit(0);
   }
 };
