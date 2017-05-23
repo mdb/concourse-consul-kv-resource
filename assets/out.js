@@ -15,7 +15,6 @@ process.stdin.on('data', stdin => {
     .then(value => {
       handlers.success({
         version: {
-          value: value,
           // timestamp in milliseconds:
           ref: Date.now().toString()
         },

@@ -23,7 +23,7 @@ process.stdin.on('data', stdin => {
 
           handlers.success({
             version: {
-              value: value,
+              value: value.value,
               // timestamp in milliseconds:
               ref: Date.now().toString()
             }
