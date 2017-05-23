@@ -8,7 +8,7 @@ A [Concourse](http://concourse.ci/) resource for interacting with [Consul's KV s
 
 ## Source configuration
 
-* `key`: _Required_. The Consul key to interact with. Note that all URL path parts following `/v1/kv` are required. For example, if your key is `my-consul:8500//v1/kv/my/key`, then `key` should be "my/key".
+* `key`: _Required_. The Consul key to interact with. Note that all URL path parts following `/v1/kv` are required. For example, if your key is `my-consul:8500/v1/kv/my/key`, then `key` should be "my/key".
 * `host`: _Required_. The Consul host.
 * `token`: _Required_. A Consul ACL token.
 * `tls_cert`: _Required_. A TLS cert for the Consul.
