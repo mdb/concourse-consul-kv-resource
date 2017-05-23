@@ -2,8 +2,12 @@
 
 'use strict';
 
-const handlers = require('./handlers');
+const check = require('./lib/check');
 
-process.stdin.on('data', stdin => {
-  handlers.success([]);
-});
+check()
+  .then((result) => {
+    console.log(JSON.stringify(result, null, 2));
+  })
+  .finally(() => {
+    process.exit(0);
+  });

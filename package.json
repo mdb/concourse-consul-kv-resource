@@ -3,8 +3,16 @@
   "version": "0.0.1",
   "description": "Get and update Consul K/V",
   "author": "Mike Ball",
+  "scripts": {
+    "test": "node_modules/.bin/mocha"
+  },
   "dependencies": {
     "consul-kv": "0.0.2",
     "fs-extra": "2.1.2"
+  },
+  "devDependencies": {
+    "mocha": "",
+    "mock-stdin": "",
+    "nock": ""
   }
 }
