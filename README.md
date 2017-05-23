@@ -19,6 +19,10 @@ A [Concourse](http://concourse.ci/) resource for interacting with [Consul's KV s
 
 ## Behavior
 
+### `in`: Get a Consul KV key's value
+
+Gets the value of the Consul KV key configured in the source.
+
 ### `out`: Set a Consul KV key's value
 
 Sets the Consul KV key configured in the source to the value specified in the params.
