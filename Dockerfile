@@ -11,6 +11,6 @@ COPY assets/handlers.js handlers.js
 COPY package.json package.json
 
 RUN apt-get update & \
- npm install --quiet
+  npm install --quiet
 
 RUN chmod a+x check in out
