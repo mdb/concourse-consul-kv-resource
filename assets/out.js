@@ -11,7 +11,7 @@ process.stdin.on('data', stdin => {
   const source = data.source || {};
   const client = new Client(source);
 
-  client.put(source.key, data.params.value)
+  client.set(source.key, data.params.value)
     .then(value => {
       handlers.success({
         version: {
