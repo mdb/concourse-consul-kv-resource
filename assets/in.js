@@ -15,23 +15,21 @@ process.stdin.on('data', stdin => {
 
   client.get(source.key)
     .then(value => {
-      fs.ensureFile(file)
-        .then(() => {
-          fs.writeFile(file, value.value, (err) => {
-            if (err) console.log(err);
+      fs.ensureFile(file, (err) => {
+        if (err) handlers.fail(err);
 
-            handlers.success({
-              version: {
-                value: value,
-                // timestamp in milliseconds:
-                ref: Date.now().toString()
-              }
-            });
+        fs.writeFile(file, value.value, (err) => {
+          if (err) handlers.fail(err);
+
+          handlers.success({
+            version: {
+              value: value,
+              // timestamp in milliseconds:
+              ref: Date.now().toString()
+            }
           });
-        })
-        .catch(err => {
-          handlers.fail(err);
         });
+      });
     }, rejected => {
       handlers.fail(rejected);
     });
