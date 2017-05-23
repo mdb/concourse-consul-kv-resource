@@ -5,6 +5,8 @@ const Consul = require('consul-kv');
 class Client {
   constructor(source) {
     return new Consul({
+      port: source.port || '8500',
+      protocol: source.protocol || 'https',
       host: source.host,
       token: source.token,
       tlsCert: source.tls_cert,
