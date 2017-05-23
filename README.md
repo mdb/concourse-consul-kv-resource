@@ -12,6 +12,7 @@ A [Concourse](http://concourse.ci/) resource for interacting with [Consul's KV s
 * `host`: _Required_. The Consul host.
 * `token`: _Required_. A Consul ACL token.
 * `tls_cert`: _Required_. A TLS cert for the Consul.
+* `tls_key`: _Required_. A TLS cert key for the Consul.
 * `port`: _Optional_. The port on which the Consul API is hosted. Defaults to `8500`.
 * `protocol`: _Optional_. The protocol to use in calling the Consul API. Defaults to `https`.
 * `skip_cert_check`: _Optional_. Check the validity of the SSL cert.
