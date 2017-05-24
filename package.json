@@ -11,8 +11,8 @@
     "fs-extra": "2.1.2"
   },
   "devDependencies": {
-    "mocha": "",
-    "mock-stdin": "",
-    "nock": ""
+    "mocha": "3.4.1",
+    "nock": "9.0.13",
+    "mock-stdin": "0.3.1"
   }
 }
