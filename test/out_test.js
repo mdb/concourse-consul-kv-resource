@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const out = require('../assets/lib/out');
+const outAction = require('../assets/lib/out');
 const nock = require('nock');
 
 function mockPut(host) {
@@ -10,7 +10,7 @@ function mockPut(host) {
     .reply(200, 'true');
 }
 
-describe('out', () => {
+describe('outAction', () => {
   let stdin;
 
   beforeEach(() => {
@@ -35,7 +35,7 @@ describe('out', () => {
       }));
     });
 
-    return out()
+    return outAction()
       .then(result => {
         assert.equal(result.metadata[0].name, 'value');
         assert.equal(result.metadata[0].value, 'my-value');

@@ -2,10 +2,10 @@
 
 'use strict';
 
-const out = require('./lib/out');
+const outAction = require('./lib/out');
 const handlers = require('./lib/handlers');
 
-out()
+outAction()
   .then(result => {
     handlers.success(result);
   });

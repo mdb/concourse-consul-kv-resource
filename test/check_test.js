@@ -1,9 +1,9 @@
 'use strict';
 
 const assert = require('assert');
-const check = require('../assets/lib/check');
+const checkAction = require('../assets/lib/check');
 
-describe('check', () => {
+describe('checkAction', () => {
   let stdin;
 
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe('check', () => {
       stdin.send('foo');
     });
 
-    return check()
+    return checkAction()
       .then(result => {
         assert.equal(result.length, 0);
       }, rejected => {

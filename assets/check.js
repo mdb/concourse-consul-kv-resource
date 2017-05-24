@@ -2,10 +2,10 @@
 
 'use strict';
 
-const check = require('./lib/check');
+const checkAction = require('./lib/check');
 const handlers = require('./lib/handlers');
 
-check()
+checkAction()
   .then((result) => {
     handlers.success(result);
   });

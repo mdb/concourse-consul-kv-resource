@@ -3,7 +3,7 @@
 const Client = require('./client');
 const handlers = require('./handlers');
 
-function out() {
+function outAction() {
   return new Promise(resolve => {
     process.stdin.on('data', stdin => {
       const data = JSON.parse(stdin);
@@ -29,4 +29,4 @@ function out() {
   });
 }
 
-module.exports = out;
+module.exports = outAction;

@@ -1,6 +1,6 @@
 'use strict';
 
-function check() {
+function checkAction() {
   return new Promise(resolve => {
     process.stdin.on('data', stdin => {
       resolve([]);
@@ -8,4 +8,4 @@ function check() {
   });
 }
 
-module.exports = check;
+module.exports = checkAction;
