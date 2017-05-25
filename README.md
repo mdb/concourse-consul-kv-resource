@@ -31,7 +31,10 @@ Sets the Consul KV key configured in the source to the value specified in the pa
 
 #### Parameters
 
-* `value`: _Required_. The value to set the key to.
+`value` _or_ `file` must be set. Both cannot be set.
+
+* `value`: _Optional_. The value to set the key to.
+* `file`: _Optional_. The path to a file in which the intended value is written.
 
 ## Example pipeline
 
@@ -62,4 +65,10 @@ jobs:
   - put: my-consul-key
     params:
       value: 'foobar'
+
+- name: set-my-consul-key-from-a-file
+  plan:
+  - put: my-consul-key
+    params:
+      file: my-new-key/my-key-file
 ```
