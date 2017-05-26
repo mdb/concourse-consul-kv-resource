@@ -7,10 +7,10 @@ const handlers = require('./handlers');
 function inAction(destDir) {
   return new Promise(resolve => {
     process.stdin.on('data', stdin => {
-      const data = JSON.parse(stdin);
-      const source = data.source || {};
-      const client = new Client(source);
-      const file = `${destDir}/${source.key}`
+      let data = JSON.parse(stdin);
+      let source = data.source || {};
+      let client = new Client(source);
+      let file = `${destDir}/${source.key}`
 
       client.get(source.key)
         .then(value => {
