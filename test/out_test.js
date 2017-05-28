@@ -63,7 +63,7 @@ describe('outAction', () => {
         }));
       });
 
-      return outAction()
+      return outAction('.')
         .then(result => {
           assert.equal(result.metadata[0].name, 'value');
           assert.equal(result.metadata[0].value, 'my-value-from-file');

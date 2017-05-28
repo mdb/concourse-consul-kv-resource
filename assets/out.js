@@ -5,7 +5,7 @@
 const outAction = require('./lib/out');
 const handlers = require('./lib/handlers');
 
-outAction()
+outAction(process.argv[2])
   .then(result => {
     handlers.success(result);
   });
