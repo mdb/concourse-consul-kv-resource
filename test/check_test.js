@@ -36,7 +36,7 @@ describe('checkAction', () => {
 
     return checkAction()
       .then(result => {
-        assert.equal(typeof(result.ref), 'string');
+        assert.equal(typeof(result[0].ref), 'string');
       }, rejected => {
         console.log('rejected: ', rejected);
       });

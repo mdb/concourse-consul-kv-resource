@@ -12,9 +12,9 @@ function checkAction() {
 
       client.get(source.key)
         .then(value => {
-          resolve({
+          resolve([{
             ref: Date.now().toString()
-          });
+          }]);
         }, rejected => {
           handlers.fail(rejected)
         });
