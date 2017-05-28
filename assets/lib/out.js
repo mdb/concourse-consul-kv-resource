@@ -12,7 +12,7 @@ function getValue(params) {
     }
 
     if (params.file) {
-      fs.readFile(path.resolve(params.file), (err, val) => {
+      fs.readFile(params.file, (err, val) => {
         if (err) handlers.fail(err);
 
         resolve(val.toString().replace(/\n$/, ''));
