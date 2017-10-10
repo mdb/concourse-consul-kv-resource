@@ -13,7 +13,7 @@ function checkAction() {
       client.get(source.key)
         .then(value => {
           resolve([{
-            ref: Date.now().toString()
+            value: value.value
           }]);
         }, rejected => {
           handlers.fail(rejected)
