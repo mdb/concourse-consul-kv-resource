@@ -19,7 +19,7 @@ describe('checkAction', () => {
     stdin = require('mock-stdin').stdin();
   });
 
-  it('gets the Consul key configured in the source and resolves its promise with a timestamp as its ref', () => {
+  it('gets the Consul key configured in the source and resolves its promise with the value', () => {
     mockGet();
 
     process.nextTick(() => {
@@ -36,7 +36,8 @@ describe('checkAction', () => {
 
     return checkAction()
       .then(result => {
-        assert.equal(typeof(result[0].ref), 'string');
+        assert.equal(result.length, 1);
+        assert.deepEqual(result[0], { value: 'my-value' });
       }, rejected => {
         console.log('rejected: ', rejected);
       });
