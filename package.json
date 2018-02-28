@@ -4,13 +4,15 @@
   "description": "Get and update Consul K/V",
   "author": "Mike Ball",
   "scripts": {
-    "test": "node_modules/.bin/mocha"
+    "test": "npm run lint && node_modules/.bin/mocha",
+    "lint": "./node_modules/.bin/eslint assets test"
   },
   "dependencies": {
     "consul-kv": "0.0.2",
     "fs-extra": "2.1.2"
   },
   "devDependencies": {
+    "eslint": "^4.10.0",
     "mocha": "3.4.1",
     "nock": "9.0.13",
     "mock-stdin": "0.3.1"
