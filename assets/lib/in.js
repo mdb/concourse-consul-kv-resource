@@ -10,7 +10,7 @@ function inAction(destDir) {
       let data = JSON.parse(stdin);
       let source = data.source || {};
       let client = new Client(source);
-      let file = `${destDir}/${source.key}`
+      let file = `${destDir}/${source.key}`;
 
       client.get(source.key)
         .then(value => {
@@ -20,13 +20,13 @@ function inAction(destDir) {
             fs.writeFile(file, value.value, (err) => {
               if (err) handlers.fail(err);
 
-            resolve({
-              version: {
-                value: value.value,
-                // timestamp in milliseconds:
-                ref: Date.now().toString()
-              }
-            });
+              resolve({
+                version: {
+                  value: value.value,
+                  // timestamp in milliseconds:
+                  ref: Date.now().toString()
+                }
+              });
           });
         });
       }, rejected => {
