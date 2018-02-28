@@ -12,25 +12,24 @@ function inAction(destDir) {
       let client = new Client(source);
       let file = `${destDir}/${source.key}`;
 
-      client.get(source.key)
-        .then(value => {
-          fs.ensureFile(file, (err) => {
+      client.get(source.key).then(value => {
+        fs.ensureFile(file, (err) => {
+          if (err) handlers.fail(err);
+
+          fs.writeFile(file, value.value, (err) => {
             if (err) handlers.fail(err);
 
-            fs.writeFile(file, value.value, (err) => {
-              if (err) handlers.fail(err);
-
-              resolve({
-                version: {
-                  value: value.value,
-                  // timestamp in milliseconds:
-                  ref: Date.now().toString()
-                }
-              });
+            resolve({
+              version: {
+                value: value.value,
+                // timestamp in milliseconds:
+                ref: Date.now().toString()
+              }
+            });
           });
         });
       }, rejected => {
-        handlers.fail(rejected)
+        handlers.fail(rejected);
       });
     });
   });

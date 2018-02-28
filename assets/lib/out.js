@@ -30,21 +30,20 @@ function outAction(sourceDir) {
       let client = new Client(source);
 
       getValue(data.params, sourceDir).then(value => {
-        client.set(source.key, value)
-          .then(result => {
-            resolve({
-              version: {
-                // timestamp in milliseconds:
-                ref: Date.now().toString()
-              },
-              metadata: [{
-                name: 'value',
-                value: value
-              }]
-            });
-          }, rejected => {
-            handlers.fail(rejected);
+        client.set(source.key, value).then(() => {
+          resolve({
+            version: {
+              // timestamp in milliseconds:
+              ref: Date.now().toString()
+            },
+            metadata: [{
+              name: 'value',
+              value: value
+            }]
           });
+        }, rejected => {
+          handlers.fail(rejected);
+        });
       });
     });
   });

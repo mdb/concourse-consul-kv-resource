@@ -5,7 +5,7 @@ const inAction = require('../assets/lib/in');
 const nock = require('nock');
 const fs = require('fs-extra');
 
-function mockGet(host) {
+function mockGet() {
   return nock('https://my-consul.com:8500')
     .get('/v1/kv/my/key?token=my-token')
     .reply(200, [{

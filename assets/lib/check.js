@@ -16,7 +16,7 @@ function checkAction() {
             value: value.value
           }]);
         }, rejected => {
-          handlers.fail(rejected)
+          handlers.fail(rejected);
         });
     });
   });
