@@ -1,6 +1,6 @@
 {
   "name": "consul-kv-resource",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Get and update Consul K/V",
   "author": "Mike Ball",
   "scripts": {
