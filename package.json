@@ -12,9 +12,9 @@
     "fs-extra": "2.1.2"
   },
   "devDependencies": {
-    "eslint": "^4.10.0",
-    "mocha": "3.4.1",
-    "nock": "9.0.13",
+    "eslint": "^5.7.0",
+    "mocha": "5.2.0",
+    "nock": "10.0.1",
     "mock-stdin": "0.3.1"
   }
 }
