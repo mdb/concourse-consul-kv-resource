@@ -1,11 +1,11 @@
 {
   "name": "consul-kv-resource",
   "version": "0.0.5",
-  "description": "Get and update Consul K/V",
+  "description": "Get and update Consul K/V from Concourse pipelines",
   "author": "Mike Ball",
   "scripts": {
-    "test": "npm run lint && node_modules/.bin/mocha",
-    "lint": "./node_modules/.bin/eslint assets test"
+    "test": "npm run lint && mocha",
+    "lint": "eslint assets test"
   },
   "dependencies": {
     "consul-kv": "0.1.2",
