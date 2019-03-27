@@ -1,8 +1,13 @@
 language: node_js
 
 node_js:
-  - 7.10
-  - 8.12
+  - 11.12
+
+services:
+  - docker
+
+after_script:
+  - docker build -t consul-kv-resource .
 
 notifications:
   email:
