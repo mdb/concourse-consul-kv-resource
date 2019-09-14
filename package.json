@@ -1,6 +1,6 @@
 {
   "name": "consul-kv-resource",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Get and update Consul K/V from Concourse pipelines",
   "author": "Mike Ball",
   "scripts": {
@@ -8,7 +8,7 @@
     "lint": "eslint assets test"
   },
   "dependencies": {
-    "consul-kv": "0.1.3",
+    "consul-kv": "0.1.5",
     "fs-extra": "8.1.0"
   },
   "devDependencies": {
