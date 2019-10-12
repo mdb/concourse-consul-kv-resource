@@ -1,5 +1,3 @@
-'use strict';
-
 const assert = require('assert');
 const outAction = require('../assets/lib/out');
 const nock = require('nock');
