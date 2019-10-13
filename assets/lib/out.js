@@ -14,9 +14,11 @@ function getValue(params, sourceDir) {
 
         resolve(val.toString().replace(/\n$/, ''));
       });
-    } else {
-      resolve(params.value);
+
+      return;
     }
+
+    resolve(params.value);
   });
 }
 
