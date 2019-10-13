@@ -1,5 +1,3 @@
-'use strict';
-
 const fs = require('fs-extra');
 const Client = require('./client');
 const handlers = require('./handlers');
@@ -7,10 +5,10 @@ const handlers = require('./handlers');
 function inAction(destDir) {
   return new Promise(resolve => {
     process.stdin.on('data', stdin => {
-      let data = JSON.parse(stdin);
-      let source = data.source || {};
-      let client = new Client(source);
-      let file = `${destDir}/${source.key}`;
+      const data = JSON.parse(stdin);
+      const source = data.source || {};
+      const client = new Client(source);
+      const file = `${destDir}/${source.key}`;
 
       client.get(source.key).then(value => {
         fs.ensureFile(file, (err) => {
@@ -21,10 +19,9 @@ function inAction(destDir) {
 
             resolve({
               version: {
-                value: value.value,
-                // timestamp in milliseconds:
-                ref: Date.now().toString()
-              }
+                value: value.value
+              },
+              metadata: []
             });
           });
         });

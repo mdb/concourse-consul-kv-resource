@@ -1,5 +1,3 @@
-'use strict';
-
 const Client = require('./client');
 const handlers = require('./handlers');
 const fs = require('fs');
@@ -33,10 +31,13 @@ function outAction(sourceDir) {
         client.set(source.key, value).then(() => {
           resolve({
             version: {
-              // timestamp in milliseconds:
-              ref: Date.now().toString()
+              value: value
             },
             metadata: [{
+              name: 'ref',
+              // timestamp in milliseconds:
+              value: Date.now().toString()
+            }, {
               name: 'value',
               value: value
             }]

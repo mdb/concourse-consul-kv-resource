@@ -8,6 +8,19 @@ function mockPut(value) {
     .reply(200, 'true');
 }
 
+function sourceJson(params) {
+  return JSON.stringify({
+    source: {
+      host: 'my-consul.com',
+      tls_cert: 'my-cert',
+      tls_key: 'my-cert-key',
+      token: 'my-token',
+      key: 'my/key'
+    },
+    params: params
+  });
+}
+
 describe('outAction', () => {
   let stdin;
 
@@ -16,28 +29,21 @@ describe('outAction', () => {
   });
 
   describe('when it is passed params with a `value`', () => {
-    it('sets the Consul key to the value cited in the params.value and resolves the promise with the proper metadata', () => {
+    it('sets the Consul key to the value cited in the params.value and resolves the promise with the proper version and metadata', () => {
       mockPut('my-value');
 
       process.nextTick(() => {
-        stdin.send(JSON.stringify({
-          source: {
-            host: 'my-consul.com',
-            tls_cert: 'my-cert',
-            tls_key: 'my-cert-key',
-            token: 'my-token',
-            key: 'my/key'
-          },
-          params: {
-            value: 'my-value'
-          }
+        stdin.send(sourceJson({
+          value: 'my-value'
         }));
       });
 
       return outAction()
         .then(result => {
-          assert.equal(result.metadata[0].name, 'value');
-          assert.equal(result.metadata[0].value, 'my-value');
+          assert.equal(result.metadata[0].name, 'ref');
+          assert.equal(result.metadata[1].name, 'value');
+          assert.equal(result.metadata[1].value, 'my-value');
+          assert.equal(result.version.value, 'my-value');
         });
     });
   });
@@ -47,24 +53,17 @@ describe('outAction', () => {
       mockPut('my-value-from-file');
 
       process.nextTick(() => {
-        stdin.send(JSON.stringify({
-          source: {
-            host: 'my-consul.com',
-            tls_cert: 'my-cert',
-            tls_key: 'my-cert-key',
-            token: 'my-token',
-            key: 'my/key'
-          },
-          params: {
-            file: 'test/fixtures/value_from_file'
-          }
+        stdin.send(sourceJson({
+          file: 'test/fixtures/value_from_file'
         }));
       });
 
       return outAction('.')
         .then(result => {
-          assert.equal(result.metadata[0].name, 'value');
-          assert.equal(result.metadata[0].value, 'my-value-from-file');
+          assert.equal(result.metadata[0].name, 'ref');
+          assert.equal(result.metadata[1].name, 'value');
+          assert.equal(result.metadata[1].value, 'my-value-from-file');
+          assert.equal(result.version.value, 'my-value-from-file');
         });
     });
   });

@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   fail: function(err) {
     if (err) {
