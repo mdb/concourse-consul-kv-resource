@@ -10,6 +10,20 @@ function mockGet() {
     }]);
 }
 
+function sourceJson(extra) {
+  extra = extra || {};
+
+  return JSON.stringify(Object.assign({
+    source: {
+      host: 'my-consul.com',
+      tls_cert: 'my-cert',
+      tls_key: 'my-cert-key',
+      token: 'my-token',
+      key: 'my/key'
+    }
+  }, extra));
+}
+
 describe('checkAction', () => {
   let stdin;
 
@@ -22,15 +36,7 @@ describe('checkAction', () => {
       mockGet();
 
       process.nextTick(() => {
-        stdin.send(JSON.stringify({
-          source: {
-            host: 'my-consul.com',
-            tls_cert: 'my-cert',
-            tls_key: 'my-cert-key',
-            token: 'my-token',
-            key: 'my/key'
-          }
-        }));
+        stdin.send(sourceJson());
       });
 
       return checkAction()
@@ -48,14 +54,7 @@ describe('checkAction', () => {
       mockGet();
 
       process.nextTick(() => {
-        stdin.send(JSON.stringify({
-          source: {
-            host: 'my-consul.com',
-            tls_cert: 'my-cert',
-            tls_key: 'my-cert-key',
-            token: 'my-token',
-            key: 'my/key'
-          },
+        stdin.send(sourceJson({
           version: {
             value: 'my-value'
           }
@@ -76,14 +75,7 @@ describe('checkAction', () => {
       mockGet();
 
       process.nextTick(() => {
-        stdin.send(JSON.stringify({
-          source: {
-            host: 'my-consul.com',
-            tls_cert: 'my-cert',
-            tls_key: 'my-cert-key',
-            token: 'my-token',
-            key: 'my/key'
-          },
+        stdin.send(sourceJson({
           version: {
             value: 'my-original-value'
           }

@@ -11,6 +11,18 @@ function mockGet() {
     }]);
 }
 
+function sourceJson() {
+  return JSON.stringify({
+    source: {
+      host: 'my-consul.com',
+      tls_cert: 'my-cert',
+      tls_key: 'my-cert-key',
+      token: 'my-token',
+      key: 'my/key'
+    }
+  });
+}
+
 describe('inAction', () => {
   let stdin;
 
@@ -22,15 +34,7 @@ describe('inAction', () => {
     mockGet();
 
     process.nextTick(() => {
-      stdin.send(JSON.stringify({
-        source: {
-          host: 'my-consul.com',
-          tls_cert: 'my-cert',
-          tls_key: 'my-cert-key',
-          token: 'my-token',
-          key: 'my/key'
-        }
-      }));
+      stdin.send(sourceJson());
     });
 
     return inAction('test-dir')
