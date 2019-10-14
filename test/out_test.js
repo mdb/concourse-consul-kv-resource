@@ -29,7 +29,9 @@ describe('outAction', () => {
   });
 
   describe('when it is passed params with a `value`', () => {
-    it('sets the Consul key to the value cited in the params.value and resolves the promise with the proper version and metadata', () => {
+    let result;
+
+    beforeEach(() => {
       mockPut('my-value');
 
       process.nextTick(() => {
@@ -39,17 +41,29 @@ describe('outAction', () => {
       });
 
       return outAction()
-        .then(result => {
-          assert.equal(result.metadata[0].name, 'ref');
-          assert.equal(result.metadata[1].name, 'value');
-          assert.equal(result.metadata[1].value, 'my-value');
-          assert.equal(result.version.value, 'my-value');
+        .then(res => {
+          result = res;
         });
+    });
+
+    it('sets the Consul key to the value cited in the params.value and resolves the promise with the proper version', () => {
+      assert.equal(result.version.value, 'my-value');
+    });
+
+    it('sets the Consul key to the value cited in the params.value and resolves the promise with metadata that includes a "ref"', () => {
+      assert.equal(result.metadata[0].name, 'ref');
+    });
+
+    it('sets the Consul key to the value cited in the params.value and resolves the promise with metadata that includes a "value"', () => {
+      assert.equal(result.metadata[1].name, 'value');
+      assert.equal(result.metadata[1].value, 'my-value');
     });
   });
 
   describe('when it is passed params with a `file`', () => {
-    it('sets the Consul key to the value cited in the file and resolves the promise with the proper metadata', () => {
+    let result;
+
+    beforeEach(() => {
       mockPut('my-value-from-file');
 
       process.nextTick(() => {
@@ -59,12 +73,22 @@ describe('outAction', () => {
       });
 
       return outAction('.')
-        .then(result => {
-          assert.equal(result.metadata[0].name, 'ref');
-          assert.equal(result.metadata[1].name, 'value');
-          assert.equal(result.metadata[1].value, 'my-value-from-file');
-          assert.equal(result.version.value, 'my-value-from-file');
+        .then(res => {
+          result = res;
         });
+    });
+
+    it('sets the Consul key to the value cited in the file and resolves the promise with the proper version', () => {
+      assert.equal(result.version.value, 'my-value-from-file');
+    });
+
+    it('sets the Consul key to the value cited in the params.value and resolves the promise with metadata that includes a "ref"', () => {
+      assert.equal(result.metadata[0].name, 'ref');
+    });
+
+    it('sets the Consul key to the value cited in the params.value and resolves the promise with metadata that includes a "value"', () => {
+      assert.equal(result.metadata[1].name, 'value');
+      assert.equal(result.metadata[1].value, 'my-value-from-file');
     });
   });
 });
