@@ -1,16 +1,19 @@
 const Client = require('./client');
-const handlers = require('./handlers');
 const fs = require('fs');
 
 function getValue(params, sourceDir) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     if (params.value && params.file) {
-      handlers.fail(new Error('Both `file` and `value` present in params'));
+      reject(new Error('Both `file` and `value` present in params'));
     }
 
     if (params.file) {
       fs.readFile(`${sourceDir}/${params.file}`, (err, val) => {
-        if (err) handlers.fail(err);
+        if (err) {
+          reject(err);
+
+          return;
+        }
 
         resolve(val.toString().replace(/\n$/, ''));
       });
@@ -23,7 +26,7 @@ function getValue(params, sourceDir) {
 }
 
 function outAction(sourceDir) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     process.stdin.on('data', stdin => {
       const data = JSON.parse(stdin);
       const source = data.source || {};
@@ -45,7 +48,7 @@ function outAction(sourceDir) {
             }]
           });
         }, rejected => {
-          handlers.fail(rejected);
+          reject(rejected);
         });
       });
     });

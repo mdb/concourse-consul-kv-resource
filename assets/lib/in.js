@@ -1,9 +1,8 @@
 const fs = require('fs-extra');
 const Client = require('./client');
-const handlers = require('./handlers');
 
 function inAction(destDir) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     process.stdin.on('data', stdin => {
       const data = JSON.parse(stdin);
       const source = data.source || {};
@@ -12,10 +11,18 @@ function inAction(destDir) {
 
       client.get(source.key).then(value => {
         fs.ensureFile(file, (err) => {
-          if (err) handlers.fail(err);
+          if (err) {
+            reject(err);
+
+            return;
+          }
 
           fs.writeFile(file, value.value, (err) => {
-            if (err) handlers.fail(err);
+            if (err) {
+              reject(err);
+
+              return;
+            }
 
             resolve({
               version: {
@@ -26,7 +33,7 @@ function inAction(destDir) {
           });
         });
       }, rejected => {
-        handlers.fail(rejected);
+        reject(rejected);
       });
     });
   });

@@ -1,8 +1,7 @@
 const Client = require('./client');
-const handlers = require('./handlers');
 
 function checkAction() {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     process.stdin.on('data', stdin => {
       const data = JSON.parse(stdin);
       const source = data.source || {};
@@ -21,7 +20,7 @@ function checkAction() {
 
           resolve([]);
         }, rejected => {
-          handlers.fail(rejected);
+          reject(rejected);
         });
     });
   });
