@@ -1,12 +1,11 @@
 [![Docker Automated build](https://img.shields.io/docker/automated/clapclapexcitement/concourse-consul-kv-resource.svg?style=flat)](https://hub.docker.com/r/clapclapexcitement/concourse-consul-kv-resource/)
 [![Build Status](https://travis-ci.org/mdb/concourse-consul-kv-resource.svg?branch=master)](https://travis-ci.org/mdb/concourse-consul-kv-resource)
 
-
 # concourse-consul-kv-resource
 
 A [Concourse](http://concourse.ci/) resource for interacting with [Consul's KV store](https://www.consul.io/api/kv.html).
 
-`concourse-consul-kv-resource` can be used to get or set a key in Consul's KV store.
+`concourse-consul-kv-resource` can be used to get or set a key/value in Consul's KV store.
 
 ## Source configuration
 
@@ -23,7 +22,30 @@ A [Concourse](http://concourse.ci/) resource for interacting with [Consul's KV s
 
 ### `in`: Get a Consul KV key's value
 
-Gets the value of the Consul KV key configured in the source.
+Gets the value of the Consul KV key configured in the source. The key's plain text value is written to a `<resource-get>/<key-name>` file.
+
+For example, the following pipeline's `get-my-consul-key` job writes the `foo` key's value to a `my-consul-key/my/key` file:
+
+```yaml
+...
+
+resources:
+
+- name: my-consul-key
+  type: consul-kv
+  source:
+    token: my-acl-token
+    host: my-consul.com
+    tls_cert: my-cert-string
+    tls_key: my-cert-key-string
+    key: my/key
+
+jobs:
+
+- name: get-my-consul-key
+  plan:
+  - get: my-consul-key
+```
 
 ### `out`: Set a Consul KV key's value
 
@@ -38,7 +60,7 @@ Sets the Consul KV key configured in the source to the value specified in the pa
 
 ## Example pipeline
 
-```
+```yaml
 resources:
 
 - name: my-consul-key
@@ -59,6 +81,10 @@ resource_types:
     tag: latest
 
 jobs:
+
+- name: get-my-consul-key
+  plan:
+  - get: my-consul-key
 
 - name: set-my-consul-key
   plan:
