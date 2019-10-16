@@ -11,8 +11,8 @@ A [Concourse](http://concourse.ci/) resource for interacting with [Consul's KV s
 
 * `key`: _Required_. The Consul key to interact with. Note that all URL path parts following `/v1/kv` are required. For example, if your key is `my-consul:8500/v1/kv/my/key`, then `key` should be "my/key".
 * `host`: _Required_. The Consul host.
-* `token`: _Required_. A Consul ACL token.
-* `tls_cert`: _Required_. A TLS cert for the Consul.
+* `token`: _Optional_. A Consul ACL token.
+* `tls_cert`: _Optional_. A TLS cert for the Consul.
 * `tls_key`: _Required_. A TLS cert key for the Consul.
 * `port`: _Optional_. The port on which the Consul API is hosted. Defaults to `8500`.
 * `protocol`: _Optional_. The protocol to use in calling the Consul API. Defaults to `https`.
