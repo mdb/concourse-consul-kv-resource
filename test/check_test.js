@@ -10,6 +10,12 @@ function mockGet() {
     }]);
 }
 
+function mockGetNotFound() {
+  return nock('https://my-consul.com:8500')
+    .get('/v1/kv/my/key?token=my-token')
+    .reply(404, '');
+}
+
 function sourceJson(extra) {
   extra = extra || {};
 
@@ -29,6 +35,22 @@ describe('checkAction', () => {
 
   beforeEach(() => {
     stdin = require('mock-stdin').stdin();
+  });
+
+  describe('when there is no key value in Consul', () => {
+    it('rejects its promise with a meaningful message', () => {
+      mockGetNotFound();
+
+      process.nextTick(() => {
+        stdin.send(sourceJson());
+      });
+
+      return checkAction()
+        .then()
+        .catch(rejected => {
+          assert.equal(rejected.message, 'my/key has no value');
+        });
+    });
   });
 
   describe('when there is no existing version', () => {

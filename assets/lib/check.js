@@ -10,6 +10,12 @@ function checkAction() {
 
       client.get(source.key)
         .then(value => {
+          if (!value.value) {
+            reject(new Error(`${source.key} has no value`));
+
+            return;
+          }
+
           if (!previousVersion || previousVersion !== value.value) {
             resolve([{
               value: value.value
