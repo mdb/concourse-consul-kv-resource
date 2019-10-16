@@ -39,7 +39,7 @@ function outAction(sourceDir) {
               value: value
             },
             metadata: [{
-              name: 'ref',
+              name: 'timestamp',
               // timestamp in milliseconds:
               value: Date.now().toString()
             }, {

@@ -50,8 +50,8 @@ describe('outAction', () => {
       assert.equal(result.version.value, 'my-value');
     });
 
-    it('sets the Consul key to the value cited in the params.value and resolves the promise with metadata that includes a "ref"', () => {
-      assert.equal(result.metadata[0].name, 'ref');
+    it('sets the Consul key to the value cited in the params.value and resolves the promise with metadata that includes a "timestamp"', () => {
+      assert.equal(result.metadata[0].name, 'timestamp');
     });
 
     it('sets the Consul key to the value cited in the params.value and resolves the promise with metadata that includes a "value"', () => {
@@ -82,8 +82,8 @@ describe('outAction', () => {
       assert.equal(result.version.value, 'my-value-from-file');
     });
 
-    it('sets the Consul key to the value cited in the params.value and resolves the promise with metadata that includes a "ref"', () => {
-      assert.equal(result.metadata[0].name, 'ref');
+    it('sets the Consul key to the value cited in the params.value and resolves the promise with metadata that includes a "timestamp"', () => {
+      assert.equal(result.metadata[0].name, 'timestamp');
     });
 
     it('sets the Consul key to the value cited in the params.value and resolves the promise with metadata that includes a "value"', () => {
