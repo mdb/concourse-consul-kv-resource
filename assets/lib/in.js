@@ -10,14 +10,14 @@ function inAction(destDir) {
       const file = `${destDir}/${source.key}`;
 
       client.get(source.key).then(value => {
-        fs.ensureFile(file, (err) => {
+        fs.ensureFile(file, err => {
           if (err) {
             reject(err);
 
             return;
           }
 
-          fs.writeFile(file, value.value, (err) => {
+          fs.writeFile(file, value.value, err => {
             if (err) {
               reject(err);
 
@@ -28,7 +28,10 @@ function inAction(destDir) {
               version: {
                 value: value.value
               },
-              metadata: []
+              metadata: [{
+                name: 'value',
+                value: value.value
+              }]
             });
           });
         });
