@@ -1,22 +1,32 @@
-'use strict';
-
 const Client = require('./client');
-const handlers = require('./handlers');
 
 function checkAction() {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     process.stdin.on('data', stdin => {
-      let data = JSON.parse(stdin);
-      let source = data.source || {};
-      let client = new Client(source);
+      const data = JSON.parse(stdin);
+      const source = data.source || {};
+      const client = new Client(source);
+      const previousVersion = data.version && data.version.value ? data.version.value : undefined;
 
       client.get(source.key)
         .then(value => {
-          resolve([{
-            value: value.value
-          }]);
+          if (!value.value) {
+            reject(new Error(`${source.key} has no value`));
+
+            return;
+          }
+
+          if (!previousVersion || previousVersion !== value.value) {
+            resolve([{
+              value: value.value
+            }]);
+
+            return;
+          }
+
+          resolve([]);
         }, rejected => {
-          handlers.fail(rejected);
+          reject(rejected);
         });
     });
   });

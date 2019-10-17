@@ -1,35 +1,42 @@
-'use strict';
-
 const fs = require('fs-extra');
 const Client = require('./client');
-const handlers = require('./handlers');
 
 function inAction(destDir) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     process.stdin.on('data', stdin => {
-      let data = JSON.parse(stdin);
-      let source = data.source || {};
-      let client = new Client(source);
-      let file = `${destDir}/${source.key}`;
+      const data = JSON.parse(stdin);
+      const source = data.source || {};
+      const client = new Client(source);
+      const file = `${destDir}/${source.key}`;
 
       client.get(source.key).then(value => {
-        fs.ensureFile(file, (err) => {
-          if (err) handlers.fail(err);
+        fs.ensureFile(file, err => {
+          if (err) {
+            reject(err);
 
-          fs.writeFile(file, value.value, (err) => {
-            if (err) handlers.fail(err);
+            return;
+          }
+
+          fs.writeFile(file, value.value, err => {
+            if (err) {
+              reject(err);
+
+              return;
+            }
 
             resolve({
               version: {
-                value: value.value,
-                // timestamp in milliseconds:
-                ref: Date.now().toString()
-              }
+                value: value.value
+              },
+              metadata: [{
+                name: 'value',
+                value: value.value
+              }]
             });
           });
         });
       }, rejected => {
-        handlers.fail(rejected);
+        reject(rejected);
       });
     });
   });

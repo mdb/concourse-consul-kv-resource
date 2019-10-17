@@ -1,48 +1,54 @@
-'use strict';
-
 const Client = require('./client');
-const handlers = require('./handlers');
 const fs = require('fs');
 
 function getValue(params, sourceDir) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     if (params.value && params.file) {
-      handlers.fail(new Error('Both `file` and `value` present in params'));
+      reject(new Error('Both `file` and `value` present in params'));
     }
 
     if (params.file) {
       fs.readFile(`${sourceDir}/${params.file}`, (err, val) => {
-        if (err) handlers.fail(err);
+        if (err) {
+          reject(err);
+
+          return;
+        }
 
         resolve(val.toString().replace(/\n$/, ''));
       });
-    } else {
-      resolve(params.value);
+
+      return;
     }
+
+    resolve(params.value);
   });
 }
 
 function outAction(sourceDir) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     process.stdin.on('data', stdin => {
-      let data = JSON.parse(stdin);
-      let source = data.source || {};
-      let client = new Client(source);
+      const data = JSON.parse(stdin);
+      const source = data.source || {};
+      const client = new Client(source);
 
       getValue(data.params, sourceDir).then(value => {
         client.set(source.key, value).then(() => {
           resolve({
             version: {
-              // timestamp in milliseconds:
-              ref: Date.now().toString()
+              value: value
             },
             metadata: [{
+              name: 'timestamp',
+              // timestamp in milliseconds:
+              value: Date.now().toString()
+            }, {
               name: 'value',
               value: value
             }]
           });
         }, rejected => {
-          handlers.fail(rejected);
+          reject(rejected);
         });
       });
     });

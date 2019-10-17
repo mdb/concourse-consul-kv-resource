@@ -1,5 +1,3 @@
-'use strict';
-
 const Consul = require('consul-kv');
 
 class Client {

@@ -1,5 +1,3 @@
-'use strict';
-
 const assert = require('assert');
 const inAction = require('../assets/lib/in');
 const nock = require('nock');
@@ -13,36 +11,55 @@ function mockGet() {
     }]);
 }
 
+function sourceJson() {
+  return JSON.stringify({
+    source: {
+      host: 'my-consul.com',
+      tls_cert: 'my-cert',
+      tls_key: 'my-cert-key',
+      token: 'my-token',
+      key: 'my/key'
+    }
+  });
+}
+
 describe('inAction', () => {
   let stdin;
+  let result;
 
   beforeEach(() => {
     stdin = require('mock-stdin').stdin();
-  });
 
-  it('gets the Consul key configured in the source and resolves the promise with the proper metadata', () => {
     mockGet();
 
     process.nextTick(() => {
-      stdin.send(JSON.stringify({
-        source: {
-          host: 'my-consul.com',
-          tls_cert: 'my-cert',
-          tls_key: 'my-cert-key',
-          token: 'my-token',
-          key: 'my/key'
-        }
-      }));
+      stdin.send(sourceJson());
     });
 
     return inAction('test-dir')
-      .then(result => {
-        assert.equal(result.version.value, 'my-value');
+      .then(res => {
+        result = res;
       });
   });
 
-  afterEach((done) => {
-    fs.remove('test-dir', (err) => {
+  it('gets the Consul key configured in the source and resolves the promise with the proper version', () => {
+    assert.equal(result.version.value, 'my-value');
+  });
+
+  it('gets the Consul key configured in the source and resolves the promise with the proper metadata', () => {
+    assert.equal(result.metadata[0].value, 'my-value');
+  });
+
+  it('writes the Consul key configured in the source to a <key-name> file in the destination dir it is passed', () => {
+    fs.readFile('test-dir/my/key', (err, val) => {
+      if (!err) {
+        assert.equal(val, 'my-value');
+      }
+    });
+  });
+
+  afterEach(done => {
+    fs.remove('test-dir', err => {
       if (!err) done();
     });
   });
