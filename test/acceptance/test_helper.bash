@@ -1,9 +1,14 @@
 setup() {
-  docker-compose up --detach
+  docker-compose \
+    --project-name="consul-kv-resource" \
+    up \
+      --detach
 
   sleep 5
 }
 
 teardown() {
-  docker-compose down
+  docker-compose \
+    --project-name="consul-kv-resource" \
+    down
 }
