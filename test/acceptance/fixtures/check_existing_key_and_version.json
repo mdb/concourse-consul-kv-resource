@@ -3,6 +3,9 @@
     "host": "consul",
     "protocol": "http",
     "skip_ssl_check": true,
-    "key": "my-nonexistent-key"
+    "key": "my-key",
+    "version": {
+      "value": "my-value"
+    }
   }
 }
