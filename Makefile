@@ -6,7 +6,14 @@ build:
 acc-test: build install-bats
 	.bats/bin/bats test/acceptance
 
-install-bats:
-	if ! [ -x .bats/bin/bats ]; then \
-		git clone --depth 1 https://github.com/sstephenson/bats.git .bats; \
+clone-bats:
+	if ! [ -d .bats-core ]; then \
+		git clone --depth 1 https://github.com/bats-core/bats-core.git .bats-core; \
+	fi
+
+install-bats: clone-bats
+	if ! [ -d .bats ]; then \
+		mkdir .bats; \
+		cd .bats-core; \
+		./install.sh ../.bats; \
 	fi
