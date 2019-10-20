@@ -99,3 +99,74 @@ jobs:
     params:
       file: my-new-key/my-key-file
 ```
+
+## Development & testing
+
+`concourse-consul-kv-resource` development assumes relative familiarity with [Node.js](https://nodejs.org) and [Docker](https://www.docker.com/).
+
+To build and test `concourse-consul-kv-resource`:
+
+```
+make
+```
+
+This...
+
+1. builds a `concourse-consul-kv-resource` Docker image by...
+    1. installing the Node.js JavaScript dependencies
+    2. linting the Node.js JavaScript source code
+    3. running the Node.js JavaScript-based unit tests
+    4. installing the `concourse-consul-kv-resource` Node.js JavaScript source code in the resulting Docker image
+2. runs a suite of acceptance tests against the resulting `concourse-consul-kv-resource` Docker image that...
+    1. use `docker-compose` to start a local Consul seeded with a `my/key` key
+    2. run the `concourse-consul-kv-resource` Docker image with various standard input stream JSON structures and arguments that exercise the image's `check`, `in`, and `out` functionality using the local Consul
+
+### Functional testing
+
+`concourse-consul-kv-resource`'s `docker-compose.yml` can also be used to start a local Concourse, Consul, and Docker registry for test driving a local `concourse-consul-kv-resource` Docker image build.
+
+1. run `docker-compose up` to start a `localhost:8080` Concourse, a `localhost:5000` Docker registry, and a `localhost:8500` Consul.
+2. build a local `localhost:5000/concourse-consul-kv-resource:latest` `concourse-consul-kv-resource` image and publish it to the `localhost:5000` Docker registry:
+    ```bash
+    docker build --tag \
+      localhost:5000/concourse-consul-kv-resource:latest .
+    ```
+    ```bash
+    docker login \
+      --username test \
+      --password test \
+      http://localhost:5000 \
+    ```
+    ```bash
+    docker push \
+      localhost:5000/concourse-consul-kv-resource:latest
+    ```
+3. visit the `http://localhost:8080` Concourse and download the appropriate `fly` for your platform from the Concourse homepage.
+4. log into the `localhost:8080` Concourse via `fly` using the username/password combo `test/test`:
+    ```bash
+    fly \
+      --target "local" login \
+      --username test \
+      --password test \
+      --concourse-url http://localhost:8080
+    ```
+5. use the `pipeline.yml` in this repo to set and unpause a `test` pipeline:
+    ```bash
+    fly \
+      --target local set-pipeline \
+      --pipeline test \
+      --config pipeline.yml \
+      --non-interactive
+    ```
+    ```bash
+    fly \
+      --target local unpause-pipeline \
+      --pipeline test
+    ```
+6. log into the `localhost:8080` Concourse in your web browser using username/password `test`/`test` and interact with the `test` pipeline. If you'd like to seed Consul with an initial `my/key` value:
+    ```bash
+    curl \
+      --request PUT \
+      --data my-value \
+      http://localhost:8500/v1/kv/my-key
+    ```
