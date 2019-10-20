@@ -41,7 +41,6 @@ function outAction(sourceDir) {
 
       getValue(data.params, sourceDir)
         .then(value => {
-          console.log('HERE: ', value);
           client.set(source.key, value)
             .then(() => {
               resolve({
