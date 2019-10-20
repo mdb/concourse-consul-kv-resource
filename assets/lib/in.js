@@ -9,35 +9,35 @@ function inAction(destDir) {
       const client = new Client(source);
       const file = `${destDir}/${source.key}`;
 
-      client.get(source.key).then(value => {
-        fs.ensureFile(file, err => {
-          if (err) {
-            reject(err);
-
-            return;
-          }
-
-          fs.writeFile(file, value.value, err => {
+      client.get(source.key)
+        .then(value => {
+          fs.ensureFile(file, err => {
             if (err) {
               reject(err);
-
               return;
             }
 
-            resolve({
-              version: {
-                value: value.value
-              },
-              metadata: [{
-                name: 'value',
-                value: value.value
-              }]
+            fs.writeFile(file, value.value, err => {
+              if (err) {
+                reject(err);
+                return;
+              }
+
+              resolve({
+                version: {
+                  value: value.value
+                },
+                metadata: [{
+                  name: 'value',
+                  value: value.value
+                }]
+              });
             });
           });
+        })
+        .catch(rejected => {
+          reject(rejected);
         });
-      }, rejected => {
-        reject(rejected);
-      });
     });
   });
 }
