@@ -56,12 +56,7 @@ load test_helper
       concourse-consul-kv-resource \
         /opt/resource/out /fixtures"
 
-  new_key_value="$(curl \
-    --request "GET" \
-    http://localhost:8500/v1/kv/my-key \
-    | jq -r '.[0].Value' \
-    | base64 --decode)"
-
+  [ "$status" -eq 1 ]
   echo "${output}" | grep "no such file or directory, open '/fixtures/does_not_exist'"
 }
 
@@ -76,11 +71,21 @@ load test_helper
       concourse-consul-kv-resource \
         /opt/resource/out /fixtures"
 
-  new_key_value="$(curl \
-    --request "GET" \
-    http://localhost:8500/v1/kv/my-key \
-    | jq -r '.[0].Value' \
-    | base64 --decode)"
-
+  [ "$status" -eq 1 ]
   echo "${output}" | grep "Must pass required 'file' or 'value' params"
+}
+
+@test "5) /opt/resource/out: it prints a meaningful error when both a 'file' and a 'value' are present in the params" {
+  fixture="$(cat test/acceptance/fixtures/out_with_both_file_and_value_params.json)"
+
+  run bash -c "echo '${fixture}' \
+    | docker run \
+      --volume $(PWD)/test/acceptance/fixtures:/fixtures \
+      --network=consul-kv-resource_default \
+      --rm -i \
+      concourse-consul-kv-resource \
+        /opt/resource/out /fixtures"
+
+  [ "$status" -eq 1 ]
+  echo "${output}" | grep "Both 'file' and 'value' are present in params"
 }
