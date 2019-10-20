@@ -3,8 +3,19 @@ all: build acc-test
 build:
 	docker build -t concourse-consul-kv-resource .
 
-acc-test: build install-bats
+compose-up:
+	docker-compose \
+		--project-name="consul-kv-resource" \
+		up
+
+compose-down:
+	docker-compose \
+		--project-name="consul-kv-resource" \
+		down
+
+acc-test: install-bats
 	.bats/bin/bats test/acceptance
+	make compose-down
 
 clone-bats:
 	if ! [ -d .bats-core ]; then \
