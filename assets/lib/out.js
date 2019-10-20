@@ -4,12 +4,12 @@ const fs = require('fs');
 function getValue(params, sourceDir) {
   return new Promise((resolve, reject) => {
     if (!params || (!params.value && !params.file)) {
-      reject(new Error('Must pass required `file` or `value` params'));
+      reject(new Error('Must pass required \'file\' or \'value\' params'));
       return;
     }
 
     if (params.value && params.file) {
-      reject(new Error('Both `file` and `value` are present in params'));
+      reject(new Error('Both \'file\' and \'value\' are present in params'));
       return;
     }
 

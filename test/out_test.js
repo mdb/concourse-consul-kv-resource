@@ -108,7 +108,7 @@ describe('outAction', () => {
     });
 
     it('rejects the promise with an appropriate error message', () => {
-      assert.equal(err.message, 'Must pass required `file` or `value` params');
+      assert.equal(err.message, 'Must pass required \'file\' or \'value\' params');
     });
   });
 });
