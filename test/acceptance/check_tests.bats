@@ -80,5 +80,7 @@ load test_helper
         /opt/resource/check \
     | jq --raw-output '.[0].value'"
 
+  echo "${output}"
+
   [ "${output}" = "my-value" ]
 }
