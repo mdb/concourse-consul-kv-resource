@@ -15,7 +15,6 @@ compose-down:
 
 acc-test: install-bats
 	.bats/bin/bats test/acceptance
-	make compose-down
 
 clone-bats:
 	if ! [ -d .bats-core ]; then \

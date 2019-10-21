@@ -1,14 +1,11 @@
 setup() {
-  if [ "$(docker network ls | grep consul-kv-resource_default)" -eq 0 ]; then
-    echo "docker-compose network already running..."
-  else
-    docker-compose \
-      --project-name="consul-kv-resource" \
-      up \
-        --detach
+  docker-compose \
+    --project-name="consul-kv-resource" \
+    up \
+      --detach
 
-    sleep 5
-  fi
+  # wait for docker-compose to start
+  sleep 5
 
   # seed Consul with an initial K/V
   curl \
@@ -23,4 +20,8 @@ teardown() {
   if [ -f "${file}" ]; then
     rm "${file}"
   fi
+
+  docker-compose \
+    --project-name="consul-kv-resource" \
+    down
 }
