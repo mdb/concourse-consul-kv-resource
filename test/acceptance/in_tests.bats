@@ -11,5 +11,7 @@ load test_helper
       concourse-consul-kv-resource \
         /opt/resource/in /fixtures"
 
-  [ "$(cat test/acceptance/fixtures/my-key)" = "my-value" ]
+  result="$(cat test/acceptance/fixtures/my-key)"
+
+  [ "${result}" = "my-value" ]
 }
