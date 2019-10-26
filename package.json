@@ -3,6 +3,8 @@
   "version": "0.9.0",
   "description": "Get and update Consul K/V from Concourse pipelines",
   "author": "Mike Ball",
+  "repository": "https://github.com/mdb/concourse-consul-kv-resource",
+  "license": "MIT",
   "scripts": {
     "test": "npm run lint && mocha",
     "lint": "eslint assets test"

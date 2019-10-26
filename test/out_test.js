@@ -91,4 +91,24 @@ describe('outAction', () => {
       assert.equal(result.metadata[1].value, 'my-value-from-file');
     });
   });
+
+  describe('when it is passed params without a `file` or `value`', () => {
+    let err;
+
+    beforeEach(() => {
+      process.nextTick(() => {
+        stdin.send(sourceJson());
+      });
+
+      return outAction('.')
+        .then()
+        .catch(error => {
+          err = error;
+        });
+    });
+
+    it('rejects the promise with an appropriate error message', () => {
+      assert.equal(err.message, 'Must pass required \'file\' or \'value\' params');
+    });
+  });
 });

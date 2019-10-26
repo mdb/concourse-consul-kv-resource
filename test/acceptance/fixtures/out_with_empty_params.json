@@ -1,0 +1,9 @@
+{
+  "source": {
+    "host": "consul",
+    "protocol": "http",
+    "skip_ssl_check": true,
+    "key": "my-key"
+  },
+  "params": {}
+}

@@ -50,11 +50,15 @@ describe('inAction', () => {
     assert.equal(result.metadata[0].value, 'my-value');
   });
 
-  it('writes the Consul key configured in the source to a <key-name> file in the destination dir it is passed', () => {
+  it('writes the Consul key configured in the source to a <key-name> file in the destination dir it is passed', (done) => {
     fs.readFile('test-dir/my/key', (err, val) => {
-      if (!err) {
-        assert.equal(val, 'my-value');
+      if (err) {
+        assert.fail(undefined, undefined, `error reading test-dir/my/key: ${err.message}`);
+        done();
       }
+
+      assert.equal(val, 'my-value');
+      done();
     });
   });
 

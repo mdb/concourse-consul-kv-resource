@@ -1,2 +1,4 @@
 node_modules
 test-dir
+.bats-core
+.bats
