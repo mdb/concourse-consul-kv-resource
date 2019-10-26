@@ -6,7 +6,8 @@ load test_helper
   run bash -c "echo '${fixture}' \
     | docker run \
       --network=consul-kv-resource_default \
-      --rm -i \
+      --rm \
+      --interactive \
       concourse-consul-kv-resource \
         /opt/resource/out"
 
@@ -27,7 +28,8 @@ load test_helper
     | docker run \
       --volume $(pwd)/test/acceptance/fixtures:/fixtures \
       --network=consul-kv-resource_default \
-      --rm -i \
+      --rm \
+      --interactive \
       concourse-consul-kv-resource \
         /opt/resource/out /fixtures"
 
@@ -52,7 +54,8 @@ load test_helper
     | docker run \
       --volume $(pwd)/test/acceptance/fixtures:/fixtures \
       --network=consul-kv-resource_default \
-      --rm -i \
+      --rm \
+      --interactive \
       concourse-consul-kv-resource \
         /opt/resource/out /fixtures"
 
@@ -67,7 +70,8 @@ load test_helper
     | docker run \
       --volume $(pwd)/test/acceptance/fixtures:/fixtures \
       --network=consul-kv-resource_default \
-      --rm -i \
+      --rm \
+      --interactive \
       concourse-consul-kv-resource \
         /opt/resource/out /fixtures"
 
@@ -82,7 +86,8 @@ load test_helper
     | docker run \
       --volume $(pwd)/test/acceptance/fixtures:/fixtures \
       --network=consul-kv-resource_default \
-      --rm -i \
+      --rm \
+      --interactive \
       concourse-consul-kv-resource \
         /opt/resource/out /fixtures"
 

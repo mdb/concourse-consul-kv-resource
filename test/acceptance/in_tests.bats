@@ -5,13 +5,13 @@ load test_helper
 
   run bash -c "echo '${fixture}' \
     | docker run \
-      --volume test/acceptance/fixtures:/fixtures \
+      --volume $(pwd)/test/acceptance/fixtures:/fixtures \
       --network=consul-kv-resource_default \
-      --rm -i \
+      --user "$(id -u):$(id -g)" \
+      --rm \
+      --interactive \
       concourse-consul-kv-resource \
         /opt/resource/in /fixtures"
-
-  echo "$(ls test/acceptance/fixtures)"
 
   result="$(cat test/acceptance/fixtures/my-key)"
 
@@ -23,9 +23,11 @@ load test_helper
 
   run bash -c "echo '${fixture}' \
     | docker run \
-      --volume test/acceptance/fixtures:/fixtures \
+      --volume $(pwd)/test/acceptance/fixtures:/fixtures \
       --network=consul-kv-resource_default \
-      --rm -i \
+      --user "$(id -u):$(id -g)" \
+      --rm \
+      --interactive \
       concourse-consul-kv-resource \
         /opt/resource/in /fixtures \
     | jq --raw-output '.version.value'"
