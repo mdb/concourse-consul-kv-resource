@@ -1,0 +1,68 @@
+# This is a sample pipeline that can be used in local
+# development/testing against a `docker-compose`'d
+# Concourse, Consul, and Docker registry started via
+# the `docker-compose.yml` contained in this repo.
+
+resource_types:
+
+- name: consul-kv
+  type: docker-image
+  source:
+    repository: registry:5000/concourse-consul-kv-resource
+    tag: latest
+    insecure_registries:
+    - registry:5000
+
+resources:
+
+- name: my-consul-key
+  type: consul-kv
+  source:
+    host: consul
+    port: 8500
+    protocol: http
+    key: my/key
+    skip_ssl_check: true
+
+jobs:
+
+- name: set-my-consul-key
+  plan:
+  - put: my-consul-key
+    params:
+      value: foo
+
+- name: get-and-put-my-consul-key
+  plan:
+  - get: my-consul-key
+  - task: echo-key-val
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: ubuntu
+          tag: latest
+      inputs:
+      - name: my-consul-key
+      run:
+        path: cat
+        args:
+        - my-consul-key/my/key
+  - task: make-new-key-val
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: ubuntu
+          tag: latest
+      outputs:
+      - name: new-value
+      run:
+        path: /bin/bash
+        - -exc
+        - echo "new-value" > new-value/value
+  - put: my-consul-key
+    params:
+      file: new-value/value
