@@ -61,6 +61,7 @@ jobs:
       - name: new-value
       run:
         path: /bin/bash
+        args:
         - -exc
         - echo "new-value" > new-value/value
   - put: my-consul-key
