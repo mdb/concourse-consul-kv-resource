@@ -141,10 +141,17 @@ This...
     docker push \
       localhost:5000/concourse-consul-kv-resource:latest
     ```
-3. visit the `http://localhost:8080` Concourse and download the appropriate `fly` for your platform from the Concourse homepage.
+3. Download the appropriate `fly` for your platform from the Concourse homepage; make it executable. For example:
+    ```bash
+    curl \
+      --output fly \
+      http://localhost:8080/api/v1/cli\?arch\=amd64\&platform\=darwin
+
+    chmod +x fly
+    ```
 4. log into the `localhost:8080` Concourse via `fly` using the username/password combo `test/test`:
     ```bash
-    fly \
+    ./fly \
       --target "local" login \
       --username test \
       --password test \
@@ -152,14 +159,14 @@ This...
     ```
 5. use the `pipeline.yml` in this repo to set and unpause a `test` pipeline:
     ```bash
-    fly \
+    ./fly \
       --target local set-pipeline \
       --pipeline test \
       --config pipeline.yml \
       --non-interactive
     ```
     ```bash
-    fly \
+    ./fly \
       --target local unpause-pipeline \
       --pipeline test
     ```
