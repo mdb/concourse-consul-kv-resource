@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "eslint": "6.4.0",
-    "mocha": "6.2.0",
+    "mocha": "10.2.0",
     "nock": "11.3.4",
     "mock-stdin": "0.3.1"
   }
